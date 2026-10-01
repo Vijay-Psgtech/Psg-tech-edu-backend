@@ -47,7 +47,7 @@ const HomepageSchema = new mongoose.Schema(
     stats: { type: [StatSchema], default: [
       { value: "1926", label: "TRUST FOUNDED" },
       { value: "1951", label: "COLLEGE ESTABLISHED" },
-      { value: "1L+", label: "LIBRARY VOLUMES" },
+      { value: "1L+", label: "   VOLUMES" },
     ] },
 
     // Campus highlights

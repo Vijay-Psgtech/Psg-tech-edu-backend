@@ -60,8 +60,15 @@ router.get("/:slug", async (req, res) => {
   }
 });
 
-// PUT /api/departments/:slug  (protected - CMS creates or updates)
-router.post("/:slug/uploads", requireDepartmentEditor, upload.fields([{ name: "images", maxCount: 10 }, { name: "documents", maxCount: 10 }]), (req, res) => {
+// POST /api/departments/:slug/uploads  (protected - CMS asset upload)
+// This endpoint is intentionally generic: it just stores whatever files
+// arrive under the "images" / "documents" fields and hands back their
+// URLs. It doesn't know or care whether the frontend is about to put a
+// URL on the gallery, the HOD photo, a report, or a single item inside
+// Programmes / Faculty / Highlights / Profile tabs — that decision is
+// made client-side in EditDepartment.jsx (uploadItemAsset). So no
+// changes were needed here to support per-item image/PDF attachments.
+router.post("/:slug/uploads", requireDepartmentEditor, upload.fields([{ name: "images", maxCount: 20 }, { name: "documents", maxCount: 20 }]), (req, res) => {
   const files = Object.values(req.files || {}).flat().map((file) => ({
     url: `/uploads/${file.filename}`,
     label: file.originalname,

@@ -1,10 +1,23 @@
 const mongoose = require("mongoose");
 
+const AssetSchema = new mongoose.Schema({
+  url: { type: String, required: true },
+  label: { type: String, default: "" },
+}, { _id: false });
+
+// Every repeatable item below can now optionally carry one image and
+// one PDF document, uploaded from the CMS via the same generic
+// /departments/:slug/uploads endpoint used for the gallery. Both are
+// optional AssetSchema sub-documents — nothing changes for items that
+// don't use them.
+
 const ProgrammeSchema = new mongoose.Schema(
   {
     name: { type: String, required: true }, // e.g. "B.E. Computer Science and Engineering"
     level: { type: String, default: "UG" }, // UG / PG / PhD
     intake: { type: String, default: "" },
+    image: { type: AssetSchema, default: undefined },
+    document: { type: AssetSchema, default: undefined },
   },
   { _id: false }
 );
@@ -14,21 +27,22 @@ const FacultySchema = new mongoose.Schema({
   designation: { type: String, required: true },
   qualification: { type: String, default: "" },
   email: { type: String, default: "" },
+  image: { type: AssetSchema, default: undefined },
+  document: { type: AssetSchema, default: undefined },
 });
 
 const HighlightSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
+  image: { type: AssetSchema, default: undefined },
+  document: { type: AssetSchema, default: undefined },
 });
-
-const AssetSchema = new mongoose.Schema({
-  url: { type: String, required: true },
-  label: { type: String, default: "" },
-}, { _id: false });
 
 const ProfileSectionSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, default: "" },
+  image: { type: AssetSchema, default: undefined },
+  document: { type: AssetSchema, default: undefined },
 }, { _id: false });
 
 const ReportSchema = new mongoose.Schema({
@@ -37,6 +51,7 @@ const ReportSchema = new mongoose.Schema({
   organisedBy: { type: String, default: "" },
   content: { type: String, default: "" },
   images: { type: [AssetSchema], default: [] },
+  document: { type: AssetSchema, default: undefined },
 }, { timestamps: true });
 
 const DepartmentSchema = new mongoose.Schema(
