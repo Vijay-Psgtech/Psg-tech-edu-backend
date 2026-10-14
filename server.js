@@ -21,6 +21,7 @@ connectDB();
 
 const allowedOrigins = [
    "https://edutest.psgtech",
+   "https://edutest.psginstitutions.in",
   "http://localhost:5173",
   "http://localhost:5174",
 ];
